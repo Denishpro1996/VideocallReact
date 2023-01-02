@@ -1,0 +1,96 @@
+import { useState } from 'react'
+import './App.css'
+import AgoraRTC from 'agora-rtc-sdk-ng';
+import channelParameters from 'agora-rtc-sdk-ng';
+import AgoraUIKit from "agora-react-uikit";
+
+function App() {
+  const [videoCall, setVideoCall] = useState(true);
+
+  const rtcProps = {
+    appId: "0190e0516f5a47df8232522a5d9c4c6f",
+    channel: "PR LIVE CHAT",
+    token: "007eJxTYMgt3tG/ZVqSg/mB7Xvmdj0TZ/znLbmW716nyZnHES5nbZYrMBgYWhqkGpgamqWZJpqYp6RZGBkbmRoZJZqmWCabJJulTTy8OrkhkJFBYR0XKyMDBIL4PAwBQQo+nmGuCs4ejiEMDABykyEY",
+  };
+  const callbacks = {
+    EndCall: () => setVideoCall(false),
+  };
+
+
+
+  AgoraRTC.onAutoplayFailed = () => {
+    // Create button for the user interaction.
+    const btn = document.createElement("button");
+    // Set the button text.
+    btn.innerText = "Click me to resume the audio/video playback";
+    // Remove the button when onClick event occurs.
+    btn.onClick = () => {
+      btn.remove();
+    };
+    // Append the button to the UI.
+    document.body.append(btn);
+  }
+
+  // Screen Share
+  const isSharingEnabled = false
+  const screenShare = async () => {
+    if (isSharingEnabled == false) {
+      // Create a screen track for screen sharing.
+      channelParameters.screenTrack = await AgoraRTC.createScreenVideoTrack();
+      // Stop playing the local video track.
+      channelParameters.localVideoTrack.stop();
+      // Unpublish the local video track.
+      await agoraEngine.unpublish(channelParameters.localVideoTrack);
+      // Publish the screen track.
+      await agoraEngine.publish(channelParameters.screenTrack);
+      // Play the screen track on local container.
+      channelParameters.screenTrack.play(localPlayerContainer);
+      // Update the button text.
+      document.getElementById(`inItScreen`).innerHTML = "Stop Sharing";
+      // Update the screen sharing state.
+      isSharingEnabled = true;
+    } else {
+      // Stop playing the screen track.
+      channelParameters.screenTrack.stop();
+      // Unpublish the screen track.
+      await agoraEngine.unpublish(channelParameters.screenTrack);
+      // Publish the local video track.
+      await agoraEngine.publish(channelParameters.localVideoTrack);
+      // Play the local video on the local container.
+      channelParameters.localVideoTrack.play(localPlayerContainer);
+      // Update the button text.
+      document.getElementById(`inItScreen`).innerHTML = "Share Screen";
+      // Update the screen sharing state.
+      isSharingEnabled = false;
+    }
+  }
+
+
+
+  return (
+    videoCall ? (
+      <div className='vc_host'>
+        <div className='vvvvcccc'>
+        <AgoraUIKit
+          rtcProps={rtcProps}
+          callbacks={callbacks}
+          />
+          </div>
+        <div className='vc_container__'>
+          <button type="button" id="inItScreen" onClick={screenShare}>Share Screen</button>
+          <br /><label> Local Audio Level :</label>
+          <input type="range" min="0" id="localAudioVolume" max="100" step="1"  /><br />
+          <label> Remote Audio Level :</label>
+          <input type="range" min="0" id="remoteAudioVolume" max="100" step="1"  />
+        </div>
+      </div>
+    ) :
+      (
+        <div>
+          <h3 onClick={() => setVideoCall(true)}>Join</h3>
+        </div>
+      )
+  )
+}
+
+export default App

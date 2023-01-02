@@ -1,0 +1,85 @@
+*{
+  margin: 0;
+  padding: 0;
+
+}
+body{
+  width: 98.5vw;
+  height: 98vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: radial-gradient(skyblue,white);
+}
+body ::-webkit-scrollbar{
+  display: none;
+}
+.vc_host{
+  width: 99vw;
+  height: 100vh;
+}
+.vc_container__{
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+.hey{
+  height: 100vw;
+  width: 90vh;
+}
+.vvvvcccc>div{
+  height: 100vh;
+}
+.vc_sdk_container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.vc_Players{
+  width: 100%;
+  display: flex;
+}
+.vc_controllers{
+  margin-top: 100px;
+}
+.remote_vc_div{
+  width: 500px;
+  height: 500px;
+  display: flex;
+}
+.maped_users{
+  width: 100%;
+  border-radius: 10px;
+  height: 100%;
+  border-radius: 25px;
+}
+.maped_users >div{
+  border-radius: 25px;
+  box-shadow: 3px 3px 10px black;
+}
+#lcvc {
+  width: 530px;
+  height: 500px;
+  border-radius: 25px;
+  box-shadow: 3px 3px 15px black;
+  display: flex;
+  justify-content: center;
+  background: none;
+
+}
+#lcvc>div>div{
+  border-radius: 25px;
+}
+#remotevideo video{
+  width: 50%;
+}
+.vc_controllers{
+  position: absolute;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 500px;
+}
